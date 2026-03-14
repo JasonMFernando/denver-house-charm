@@ -1,25 +1,768 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <!-- TODO: Set the document title to the name of your application -->
-    <title>Denver House - Boutique Guest House</title>
-    <meta name="description" content="Denver House - A peaceful stay where comfort meets elegance. Book your boutique guesthouse experience today." />
-    <meta name="author" content="Denver House" />
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Denver House - Boutique Guest House</title>
+  <meta name="description" content="Denver House - A peaceful stay where comfort meets elegance. Book your boutique guesthouse experience today." />
+  <meta name="author" content="Denver House" />
+  <meta property="og:title" content="Denver House - Boutique Guest House" />
+  <meta property="og:description" content="A peaceful stay where comfort meets elegance." />
+  <meta property="og:type" content="website" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Lora:wght@400;500;600&family=Source+Sans+3:wght@300;400;500;600&display=swap" rel="stylesheet" />
 
-    <meta property="og:title" content="Denver House - Boutique Guest House" />
-    <meta property="og:description" content="A peaceful stay where comfort meets elegance." />
-    <meta property="og:type" content="website" />
-    <meta property="og:image" content="https://lovable.dev/opengraph-image-p98pqg.png" />
+  <style>
+    /* ========== RESET & BASE ========== */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:site" content="@Lovable" />
-    <meta name="twitter:image" content="https://lovable.dev/opengraph-image-p98pqg.png" />
-  </head>
+    :root {
+      --bg: hsl(30, 25%, 97%);
+      --fg: hsl(25, 20%, 15%);
+      --card: hsl(30, 20%, 99%);
+      --card-fg: hsl(25, 20%, 15%);
+      --primary: hsl(25, 45%, 25%);
+      --primary-fg: hsl(35, 30%, 95%);
+      --muted: hsl(30, 15%, 93%);
+      --muted-fg: hsl(25, 10%, 45%);
+      --border: hsl(30, 15%, 88%);
+      --gold: hsl(38, 70%, 55%);
+      --gold-light: hsl(38, 60%, 85%);
+      --warm: hsl(25, 30%, 40%);
+      --cream: hsl(35, 40%, 96%);
+      --dark: hsl(25, 25%, 12%);
+      --olive: hsl(80, 15%, 40%);
+      --radius: 0.75rem;
+      --shadow-soft: 0 4px 20px -4px hsl(25 20% 15% / 0.08);
+      --shadow-card: 0 8px 30px -8px hsl(25 20% 15% / 0.12);
+      --shadow-elevated: 0 16px 50px -12px hsl(25 20% 15% / 0.18);
+      --font-display: 'Playfair Display', serif;
+      --font-body: 'Source Sans 3', sans-serif;
+      --font-accent: 'Lora', serif;
+    }
 
-  <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.tsx"></script>
-  </body>
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: var(--font-body);
+      background: var(--bg);
+      color: var(--fg);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+    h1, h2, h3, h4 { font-family: var(--font-display); }
+    img { display: block; max-width: 100%; }
+    a { text-decoration: none; color: inherit; }
+    button { cursor: pointer; border: none; font-family: var(--font-body); }
+    input, textarea { font-family: var(--font-body); }
+
+    /* ========== UTILITIES ========== */
+    .container { max-width: 1152px; margin: 0 auto; padding: 0 1rem; }
+    .section { padding: 4rem 1rem; }
+    .section-cream { background: var(--cream); }
+    .text-center { text-align: center; }
+
+    .heading {
+      font-family: var(--font-display);
+      font-size: 2rem;
+      font-weight: 600;
+      color: var(--fg);
+      margin-bottom: 0.75rem;
+    }
+    .subheading {
+      font-family: var(--font-accent);
+      font-size: 1.125rem;
+      color: var(--muted-fg);
+      margin-bottom: 2.5rem;
+    }
+
+    .card {
+      background: var(--card);
+      border-radius: 1rem;
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow-card);
+    }
+
+    .btn-gold {
+      display: inline-flex; align-items: center; justify-content: center;
+      padding: 0.75rem 2rem;
+      border-radius: var(--radius);
+      font-weight: 500;
+      background: var(--gold);
+      color: var(--dark);
+      letter-spacing: 0.02em;
+      transition: all 0.3s;
+    }
+    .btn-gold:hover { box-shadow: var(--shadow-elevated); transform: translateY(-2px); filter: brightness(1.08); }
+
+    .btn-primary {
+      display: inline-flex; align-items: center; justify-content: center;
+      padding: 0.75rem 2rem;
+      border-radius: var(--radius);
+      font-weight: 500;
+      background: var(--primary);
+      color: var(--primary-fg);
+      letter-spacing: 0.02em;
+      transition: all 0.3s;
+    }
+    .btn-primary:hover { box-shadow: var(--shadow-elevated); transform: translateY(-2px); background: var(--warm); }
+
+    .input {
+      width: 100%;
+      padding: 0.75rem 1rem;
+      border-radius: var(--radius);
+      border: 1px solid var(--border);
+      background: var(--card);
+      color: var(--fg);
+      font-size: 1rem;
+      transition: all 0.2s;
+      outline: none;
+    }
+    .input:focus { ring: 2px; border-color: var(--gold); box-shadow: 0 0 0 3px hsl(38 70% 55% / 0.2); }
+
+    .label {
+      display: block;
+      font-size: 0.875rem;
+      font-weight: 500;
+      color: var(--warm);
+      margin-bottom: 0.375rem;
+    }
+
+    /* ========== ANIMATIONS ========== */
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes slideIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .fade-in-up { animation: fadeInUp 0.7s ease-out both; }
+    .fade-in-up-d1 { animation: fadeInUp 0.7s 0.15s ease-out both; }
+    .fade-in-up-d2 { animation: fadeInUp 0.7s 0.3s ease-out both; }
+    .fade-in-up-d3 { animation: fadeInUp 0.7s 0.45s ease-out both; }
+    .slide-in { animation: slideIn 0.5s ease-out both; }
+
+    /* Scroll reveal */
+    .reveal { opacity: 0; transform: translateY(30px); transition: all 0.7s ease-out; }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+
+    /* ========== NAVBAR ========== */
+    .navbar {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 50;
+      transition: all 0.5s;
+    }
+    .navbar.scrolled {
+      background: hsl(30 20% 99% / 0.95);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      box-shadow: var(--shadow-soft);
+    }
+    .navbar-inner {
+      max-width: 1152px; margin: 0 auto;
+      display: flex; align-items: center; justify-content: space-between;
+      height: 4rem; padding: 0 1rem;
+    }
+    .navbar-brand {
+      font-family: var(--font-display);
+      font-size: 1.25rem; font-weight: 600;
+      letter-spacing: 0.03em;
+      color: var(--primary-fg);
+      transition: color 0.3s;
+    }
+    .navbar.scrolled .navbar-brand { color: var(--fg); }
+
+    .nav-links { display: flex; gap: 2rem; list-style: none; }
+    .nav-links a {
+      font-size: 0.875rem; font-weight: 500;
+      letter-spacing: 0.03em;
+      color: var(--primary-fg);
+      transition: color 0.3s;
+    }
+    .nav-links a:hover { color: var(--gold); }
+    .navbar.scrolled .nav-links a { color: var(--fg); }
+    .navbar.scrolled .nav-links a:hover { color: var(--gold); }
+
+    .mobile-toggle {
+      display: none; background: none; padding: 0.5rem;
+      color: var(--primary-fg); transition: color 0.3s;
+    }
+    .navbar.scrolled .mobile-toggle { color: var(--fg); }
+
+    .mobile-menu {
+      display: none;
+      background: hsl(30 20% 99% / 0.98);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border);
+      padding: 0 1rem 1rem;
+    }
+    .mobile-menu.open { display: block; }
+    .mobile-menu a {
+      display: block; padding: 0.75rem 0;
+      color: var(--fg); font-weight: 500;
+      border-bottom: 1px solid hsl(30 15% 88% / 0.5);
+    }
+    .mobile-menu a:last-child { border-bottom: none; }
+
+    @media (max-width: 768px) {
+      .nav-links { display: none; }
+      .mobile-toggle { display: block; }
+    }
+    @media (min-width: 769px) {
+      .navbar-inner { height: 5rem; }
+      .navbar-brand { font-size: 1.5rem; }
+    }
+
+    /* ========== HERO ========== */
+    .hero {
+      position: relative; min-height: 100vh;
+      display: flex; align-items: center; justify-content: center;
+      overflow: hidden;
+    }
+    .hero-bg {
+      position: absolute; inset: 0;
+      width: 100%; height: 100%;
+      object-fit: cover;
+    }
+    .hero-overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(to bottom,
+        hsl(25 25% 12% / 0.6),
+        hsl(25 25% 12% / 0.4),
+        hsl(25 25% 12% / 0.7));
+    }
+    .hero-content {
+      position: relative; z-index: 10;
+      text-align: center; padding: 1rem;
+      max-width: 48rem;
+    }
+    .hero-welcome {
+      font-family: var(--font-accent);
+      color: var(--gold);
+      font-size: 0.875rem;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      margin-bottom: 1rem;
+    }
+    .hero-title {
+      font-family: var(--font-display);
+      font-size: 3.5rem; font-weight: 700;
+      color: var(--primary-fg);
+      margin-bottom: 1.5rem;
+      line-height: 1.1;
+    }
+    .hero-tagline {
+      font-family: var(--font-accent);
+      font-size: 1.125rem;
+      color: hsl(35 30% 95% / 0.8);
+      margin-bottom: 2.5rem;
+      max-width: 32rem;
+      margin-left: auto; margin-right: auto;
+    }
+    .hero-scroll {
+      position: absolute; bottom: 2rem;
+      left: 50%; transform: translateX(-50%);
+      animation: bounce 2s infinite;
+    }
+    @keyframes bounce {
+      0%, 100% { transform: translateX(-50%) translateY(0); }
+      50% { transform: translateX(-50%) translateY(-10px); }
+    }
+    @media (min-width: 768px) {
+      .hero-title { font-size: 5rem; }
+      .hero-tagline { font-size: 1.25rem; }
+      .hero-welcome { font-size: 1rem; }
+    }
+    @media (min-width: 1024px) {
+      .hero-title { font-size: 6rem; }
+    }
+
+    /* ========== CAROUSEL ========== */
+    .carousel-wrapper {
+      position: relative; max-width: 56rem; margin: 0 auto;
+    }
+    .carousel-viewport {
+      position: relative; overflow: hidden;
+      border-radius: 1rem;
+      aspect-ratio: 16 / 10;
+      box-shadow: var(--shadow-elevated);
+    }
+    .carousel-viewport img {
+      position: absolute; inset: 0;
+      width: 100%; height: 100%;
+      object-fit: cover;
+      transition: opacity 0.7s, transform 0.7s;
+      opacity: 0; transform: scale(1.05);
+    }
+    .carousel-viewport img.active { opacity: 1; transform: scale(1); }
+
+    .carousel-btn {
+      position: absolute; top: 50%; transform: translateY(-50%);
+      width: 2.5rem; height: 2.5rem;
+      border-radius: 50%;
+      background: hsl(30 20% 99% / 0.8);
+      backdrop-filter: blur(4px);
+      display: flex; align-items: center; justify-content: center;
+      box-shadow: var(--shadow-soft);
+      transition: all 0.3s;
+      border: none; cursor: pointer;
+    }
+    .carousel-btn:hover { background: var(--card); transform: translateY(-50%) scale(1.1); }
+    .carousel-btn.prev { left: 0.75rem; }
+    .carousel-btn.next { right: 0.75rem; }
+
+    .carousel-dots {
+      display: flex; justify-content: center; gap: 0.5rem; margin-top: 1.5rem;
+    }
+    .carousel-dot {
+      width: 0.625rem; height: 0.625rem;
+      border-radius: 9999px;
+      background: var(--border);
+      border: none; cursor: pointer;
+      transition: all 0.3s;
+    }
+    .carousel-dot.active { background: var(--gold); width: 2rem; }
+    .carousel-dot:hover { background: var(--muted-fg); }
+
+    /* ========== BOOKING ========== */
+    .booking-card { padding: 2rem; max-width: 36rem; margin: 0 auto; }
+    .form-group { margin-bottom: 1.25rem; }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+    .success-msg {
+      margin-bottom: 1.5rem; padding: 1rem;
+      border-radius: var(--radius);
+      background: hsl(38 70% 55% / 0.1);
+      border: 1px solid hsl(38 70% 55% / 0.3);
+      text-align: center;
+    }
+    .success-msg p { font-family: var(--font-accent); color: var(--fg); }
+    .success-msg .sub { font-size: 0.875rem; color: var(--muted-fg); margin-top: 0.25rem; }
+
+    /* ========== MAP / LOCATION ========== */
+    .location-grid {
+      display: grid; gap: 2rem;
+      max-width: 56rem; margin: 0 auto;
+      align-items: center;
+    }
+    @media (min-width: 768px) {
+      .location-grid { grid-template-columns: 1fr 1fr; gap: 3rem; }
+    }
+    .location-img {
+      border-radius: 1rem; overflow: hidden;
+      box-shadow: var(--shadow-card);
+    }
+    .location-img img {
+      width: 100%; height: 16rem;
+      object-fit: cover;
+      transition: transform 0.7s;
+    }
+    .location-img:hover img { transform: scale(1.05); }
+    @media (min-width: 768px) {
+      .location-img img { height: 20rem; }
+    }
+    .location-text h3 {
+      font-size: 1.5rem; font-weight: 600; margin-bottom: 1rem;
+    }
+    .location-text p { color: var(--muted-fg); margin-bottom: 0.75rem; line-height: 1.7; }
+    .location-text .accent { font-family: var(--font-accent); }
+
+    /* ========== REVIEWS ========== */
+    .reviews-grid {
+      display: grid; gap: 2.5rem;
+      max-width: 56rem; margin: 0 auto;
+    }
+    @media (min-width: 768px) {
+      .reviews-grid { grid-template-columns: 1fr 1fr; }
+    }
+    .review-form-card { padding: 2rem; }
+    .review-form-card h3 {
+      font-family: var(--font-display);
+      font-size: 1.25rem; font-weight: 600;
+      margin-bottom: 1.5rem;
+    }
+    .stars-input { display: flex; gap: 0.25rem; }
+    .star-btn {
+      font-size: 1.5rem; background: none; border: none;
+      color: var(--border); cursor: pointer;
+      transition: all 0.15s;
+    }
+    .star-btn.active { color: var(--gold); }
+    .star-btn:hover { transform: scale(1.2); }
+
+    .reviews-list {
+      max-height: 600px; overflow-y: auto;
+      padding-right: 0.5rem;
+      display: flex; flex-direction: column; gap: 1rem;
+    }
+    .review-card { padding: 1.5rem; }
+    .review-card-header {
+      display: flex; align-items: center; justify-content: space-between;
+      margin-bottom: 0.5rem;
+    }
+    .review-card-header h4 {
+      font-family: var(--font-display);
+      font-size: 1.125rem; font-weight: 600;
+    }
+    .review-stars { font-size: 1.125rem; }
+    .review-stars .filled { color: var(--gold); }
+    .review-stars .empty { color: var(--border); }
+    .review-card p { color: var(--muted-fg); line-height: 1.7; }
+
+    /* ========== FOOTER ========== */
+    .footer {
+      padding: 2.5rem 1rem;
+      border-top: 1px solid var(--border);
+      background: var(--card);
+      text-align: center;
+    }
+    .footer-brand {
+      font-family: var(--font-display);
+      font-size: 1.125rem; margin-bottom: 0.5rem;
+    }
+    .footer-copy { font-size: 0.875rem; color: var(--muted-fg); }
+
+    /* ========== RESPONSIVE ========== */
+    @media (min-width: 768px) {
+      .section { padding: 6rem 1rem; }
+      .heading { font-size: 2.5rem; }
+      .booking-card { padding: 2.5rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ========== NAVBAR ========== -->
+  <nav class="navbar" id="navbar">
+    <div class="navbar-inner">
+      <a href="#hero" class="navbar-brand">Denver House</a>
+      <ul class="nav-links">
+        <li><a href="#hero">Home</a></li>
+        <li><a href="#gallery">Gallery</a></li>
+        <li><a href="#booking">Book</a></li>
+        <li><a href="#location">Location</a></li>
+        <li><a href="#reviews">Reviews</a></li>
+      </ul>
+      <button class="mobile-toggle" id="mobileToggle" aria-label="Toggle menu">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" id="menuIcon">
+          <path d="M3 6h18M3 12h18M3 18h18" />
+        </svg>
+      </button>
+    </div>
+    <div class="mobile-menu" id="mobileMenu">
+      <a href="#hero">Home</a>
+      <a href="#gallery">Gallery</a>
+      <a href="#booking">Book</a>
+      <a href="#location">Location</a>
+      <a href="#reviews">Reviews</a>
+    </div>
+  </nav>
+
+  <!-- ========== HERO ========== -->
+  <section class="hero" id="hero">
+    <img src="https://images.unsplash.com/photo-1566073771259-6a8506099945?w=1600&q=80" alt="Denver House exterior at golden hour" class="hero-bg" />
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+      <p class="hero-welcome fade-in-up">Welcome to</p>
+      <h1 class="hero-title fade-in-up-d1">Denver House</h1>
+      <p class="hero-tagline fade-in-up-d2">A peaceful stay, where comfort meets elegance.</p>
+      <div class="fade-in-up-d3">
+        <a href="#booking" class="btn-gold" style="font-size:1.125rem;padding:1rem 2.5rem;">Book Now</a>
+      </div>
+    </div>
+    <div class="hero-scroll">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="hsl(38,70%,55%)" stroke-width="2">
+        <path d="M12 5v14M5 12l7 7 7-7" />
+      </svg>
+    </div>
+  </section>
+
+  <!-- ========== GALLERY ========== -->
+  <section class="section section-cream" id="gallery">
+    <div class="container">
+      <div class="text-center">
+        <h2 class="heading">Our Gallery</h2>
+        <p class="subheading">Experience the warmth and charm of Denver House</p>
+      </div>
+      <div class="carousel-wrapper reveal">
+        <div class="carousel-viewport" id="carouselViewport">
+          <img src="https://images.unsplash.com/photo-1631049307264-da0ec9d70304?w=1200&q=80" alt="Elegant hotel room" class="active" />
+          <img src="https://images.unsplash.com/photo-1552321554-5fefe8c9ef14?w=1200&q=80" alt="Luxury marble bathroom" />
+          <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=1200&q=80" alt="Cozy lounge with fireplace" />
+          <img src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=1200&q=80" alt="Breakfast dining area" />
+          <img src="https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=1200&q=80" alt="Garden terrace at dusk" />
+        </div>
+        <button class="carousel-btn prev" id="carouselPrev" aria-label="Previous">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>
+        </button>
+        <button class="carousel-btn next" id="carouselNext" aria-label="Next">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>
+        </button>
+        <div class="carousel-dots" id="carouselDots"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== BOOKING ========== -->
+  <section class="section" id="booking">
+    <div class="container">
+      <div class="text-center">
+        <h2 class="heading">Book Your Stay</h2>
+        <p class="subheading">Reserve your room at Denver House</p>
+      </div>
+      <div class="card booking-card reveal">
+        <div id="bookingSuccess" class="success-msg" style="display:none;">
+          <p>✓ Booking submitted successfully!</p>
+          <p class="sub">We'll be in touch shortly.</p>
+        </div>
+        <form id="bookingForm">
+          <div class="form-group">
+            <label class="label">Full Name</label>
+            <input type="text" class="input" placeholder="John Doe" required />
+          </div>
+          <div class="form-group">
+            <label class="label">Email</label>
+            <input type="email" class="input" placeholder="john@example.com" required />
+          </div>
+          <div class="form-row form-group">
+            <div>
+              <label class="label">Check-in</label>
+              <input type="date" class="input" required />
+            </div>
+            <div>
+              <label class="label">Check-out</label>
+              <input type="date" class="input" required />
+            </div>
+          </div>
+          <button type="submit" class="btn-gold" style="width:100%;padding:1rem;font-size:1rem;margin-top:0.5rem;">Submit Booking</button>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== LOCATION ========== -->
+  <section class="section section-cream" id="location">
+    <div class="container">
+      <div class="text-center">
+        <h2 class="heading">Our Location</h2>
+        <p class="subheading">Nestled in a charming neighborhood</p>
+      </div>
+      <div class="location-grid reveal">
+        <div class="location-img">
+          <img src="https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=1200&q=80" alt="Aerial view of Denver House location" />
+        </div>
+        <div class="location-text" style="text-align:center;">
+          <h3>Find Us Easily</h3>
+          <p class="accent">Denver House is conveniently located and easy to reach. Whether you're arriving by car, taxi, or public transport, getting here is effortless.</p>
+          <p>Find us easily on Google Maps.</p>
+          <a href="https://maps.app.goo.gl/wmPxYNvi7ai8F5XJA" target="_blank" rel="noopener noreferrer" class="btn-primary" style="margin-top:1rem;">View on Google Maps</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== REVIEWS ========== -->
+  <section class="section" id="reviews">
+    <div class="container">
+      <div class="text-center">
+        <h2 class="heading">Guest Reviews</h2>
+        <p class="subheading">What our guests say about their stay</p>
+      </div>
+      <div class="reviews-grid reveal">
+        <!-- Review Form -->
+        <div>
+          <div class="card review-form-card">
+            <h3>Leave a Review</h3>
+            <div id="reviewSuccess" class="success-msg" style="display:none;">
+              <p>Thank you for your review!</p>
+            </div>
+            <form id="reviewForm">
+              <div class="form-group">
+                <label class="label">Name</label>
+                <input type="text" class="input" id="reviewName" placeholder="Your name" required />
+              </div>
+              <div class="form-group">
+                <label class="label">Your Review</label>
+                <textarea class="input" id="reviewText" placeholder="Tell us about your stay..." required style="min-height:100px;resize:none;"></textarea>
+              </div>
+              <div class="form-group">
+                <label class="label">Rating</label>
+                <div class="stars-input" id="starsInput"></div>
+              </div>
+              <button type="submit" class="btn-gold" style="width:100%;padding:0.75rem;">Submit Review</button>
+            </form>
+          </div>
+        </div>
+        <!-- Reviews List -->
+        <div class="reviews-list" id="reviewsList"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== FOOTER ========== -->
+  <footer class="footer">
+    <p class="footer-brand">Denver House</p>
+    <p class="footer-copy">© 2026 Denver House. All rights reserved.</p>
+  </footer>
+
+  <script>
+    /* ========== NAVBAR ========== */
+    const navbar = document.getElementById('navbar');
+    const mobileToggle = document.getElementById('mobileToggle');
+    const mobileMenu = document.getElementById('mobileMenu');
+    const menuIcon = document.getElementById('menuIcon');
+    let mobileOpen = false;
+
+    window.addEventListener('scroll', () => {
+      navbar.classList.toggle('scrolled', window.scrollY > 40);
+    });
+
+    mobileToggle.addEventListener('click', () => {
+      mobileOpen = !mobileOpen;
+      mobileMenu.classList.toggle('open', mobileOpen);
+      menuIcon.innerHTML = mobileOpen
+        ? '<path d="M6 6l12 12M6 18L18 6" />'
+        : '<path d="M3 6h18M3 12h18M3 18h18" />';
+    });
+
+    mobileMenu.querySelectorAll('a').forEach(a => {
+      a.addEventListener('click', () => {
+        mobileOpen = false;
+        mobileMenu.classList.remove('open');
+        menuIcon.innerHTML = '<path d="M3 6h18M3 12h18M3 18h18" />';
+      });
+    });
+
+    /* ========== CAROUSEL ========== */
+    const slides = document.querySelectorAll('#carouselViewport img');
+    const dotsContainer = document.getElementById('carouselDots');
+    let currentSlide = 0;
+
+    // Create dots
+    slides.forEach((_, i) => {
+      const dot = document.createElement('button');
+      dot.className = 'carousel-dot' + (i === 0 ? ' active' : '');
+      dot.setAttribute('aria-label', 'Go to slide ' + (i + 1));
+      dot.addEventListener('click', () => goToSlide(i));
+      dotsContainer.appendChild(dot);
+    });
+
+    function goToSlide(n) {
+      slides[currentSlide].classList.remove('active');
+      dotsContainer.children[currentSlide].classList.remove('active');
+      currentSlide = (n + slides.length) % slides.length;
+      slides[currentSlide].classList.add('active');
+      dotsContainer.children[currentSlide].classList.add('active');
+    }
+
+    document.getElementById('carouselPrev').addEventListener('click', () => goToSlide(currentSlide - 1));
+    document.getElementById('carouselNext').addEventListener('click', () => goToSlide(currentSlide + 1));
+    setInterval(() => goToSlide(currentSlide + 1), 4000);
+
+    /* ========== BOOKING FORM ========== */
+    document.getElementById('bookingForm').addEventListener('submit', (e) => {
+      e.preventDefault();
+      const msg = document.getElementById('bookingSuccess');
+      msg.style.display = 'block';
+      msg.classList.add('slide-in');
+      e.target.reset();
+      setTimeout(() => { msg.style.display = 'none'; msg.classList.remove('slide-in'); }, 4000);
+    });
+
+    /* ========== REVIEWS ========== */
+    const STORAGE_KEY = 'denver_house_reviews';
+    let selectedRating = 0;
+
+    // Star input
+    const starsInput = document.getElementById('starsInput');
+    for (let i = 1; i <= 5; i++) {
+      const btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'star-btn';
+      btn.textContent = '★';
+      btn.setAttribute('aria-label', i + ' star');
+      btn.addEventListener('click', () => {
+        selectedRating = i;
+        updateStarButtons();
+      });
+      btn.addEventListener('mouseenter', () => highlightStars(i));
+      btn.addEventListener('mouseleave', () => highlightStars(selectedRating));
+      starsInput.appendChild(btn);
+    }
+
+    function highlightStars(n) {
+      starsInput.querySelectorAll('.star-btn').forEach((btn, i) => {
+        btn.classList.toggle('active', i < n);
+      });
+    }
+    function updateStarButtons() { highlightStars(selectedRating); }
+
+    function getReviews() {
+      try { return JSON.parse(localStorage.getItem(STORAGE_KEY)) || []; }
+      catch { return []; }
+    }
+
+    function renderReviews() {
+      const list = document.getElementById('reviewsList');
+      const reviews = getReviews();
+      if (reviews.length === 0) {
+        list.innerHTML = '<div class="card" style="padding:2rem;text-align:center;"><p style="color:var(--muted-fg);font-family:var(--font-accent);">No reviews yet. Be the first!</p></div>';
+        return;
+      }
+      list.innerHTML = reviews.map((r, i) => `
+        <div class="card review-card slide-in" style="animation-delay:${i * 0.1}s">
+          <div class="review-card-header">
+            <h4>${escapeHtml(r.name)}</h4>
+            <div class="review-stars">${renderStars(r.rating)}</div>
+          </div>
+          <p>${escapeHtml(r.text)}</p>
+        </div>
+      `).join('');
+    }
+
+    function renderStars(n) {
+      let s = '';
+      for (let i = 0; i < 5; i++) s += `<span class="${i < n ? 'filled' : 'empty'}">★</span>`;
+      return s;
+    }
+
+    function escapeHtml(str) {
+      const div = document.createElement('div');
+      div.textContent = str;
+      return div.innerHTML;
+    }
+
+    document.getElementById('reviewForm').addEventListener('submit', (e) => {
+      e.preventDefault();
+      if (selectedRating === 0) return;
+      const name = document.getElementById('reviewName').value;
+      const text = document.getElementById('reviewText').value;
+      const reviews = getReviews();
+      reviews.unshift({ name, text, rating: selectedRating, id: Date.now() });
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(reviews));
+      e.target.reset();
+      selectedRating = 0;
+      updateStarButtons();
+      renderReviews();
+
+      const msg = document.getElementById('reviewSuccess');
+      msg.style.display = 'block';
+      msg.classList.add('slide-in');
+      setTimeout(() => { msg.style.display = 'none'; msg.classList.remove('slide-in'); }, 3000);
+    });
+
+    renderReviews();
+
+    /* ========== SCROLL REVEAL ========== */
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, { threshold: 0.15 });
+
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+  </script>
+</body>
 </html>
