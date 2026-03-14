@@ -1,95 +1,63 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Lora:wght@400;500;600&family=Source+Sans+3:wght@300;400;500;600&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
-All colors MUST be HSL.
-*/
-
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
+    --background: 30 25% 97%;
+    --foreground: 25 20% 15%;
 
-    --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
+    --card: 30 20% 99%;
+    --card-foreground: 25 20% 15%;
 
-    --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
+    --popover: 30 20% 99%;
+    --popover-foreground: 25 20% 15%;
 
-    --primary: 222.2 47.4% 11.2%;
-    --primary-foreground: 210 40% 98%;
+    --primary: 25 45% 25%;
+    --primary-foreground: 35 30% 95%;
 
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
+    --secondary: 35 25% 90%;
+    --secondary-foreground: 25 20% 20%;
 
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
+    --muted: 30 15% 93%;
+    --muted-foreground: 25 10% 45%;
 
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222.2 47.4% 11.2%;
+    --accent: 35 60% 50%;
+    --accent-foreground: 35 30% 98%;
 
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 210 40% 98%;
 
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 222.2 84% 4.9%;
+    --border: 30 15% 88%;
+    --input: 30 15% 88%;
+    --ring: 25 45% 25%;
 
-    --radius: 0.5rem;
+    --radius: 0.75rem;
+
+    --hotel-gold: 38 70% 55%;
+    --hotel-gold-light: 38 60% 85%;
+    --hotel-warm: 25 30% 40%;
+    --hotel-cream: 35 40% 96%;
+    --hotel-dark: 25 25% 12%;
+    --hotel-olive: 80 15% 40%;
+
+    --font-display: 'Playfair Display', serif;
+    --font-body: 'Source Sans 3', sans-serif;
+    --font-accent: 'Lora', serif;
+
+    --shadow-soft: 0 4px 20px -4px hsl(25 20% 15% / 0.08);
+    --shadow-card: 0 8px 30px -8px hsl(25 20% 15% / 0.12);
+    --shadow-elevated: 0 16px 50px -12px hsl(25 20% 15% / 0.18);
 
     --sidebar-background: 0 0% 98%;
-
     --sidebar-foreground: 240 5.3% 26.1%;
-
     --sidebar-primary: 240 5.9% 10%;
-
     --sidebar-primary-foreground: 0 0% 98%;
-
     --sidebar-accent: 240 4.8% 95.9%;
-
     --sidebar-accent-foreground: 240 5.9% 10%;
-
     --sidebar-border: 220 13% 91%;
-
-    --sidebar-ring: 217.2 91.2% 59.8%;
-  }
-
-  .dark {
-    --background: 222.2 84% 4.9%;
-    --foreground: 210 40% 98%;
-
-    --card: 222.2 84% 4.9%;
-    --card-foreground: 210 40% 98%;
-
-    --popover: 222.2 84% 4.9%;
-    --popover-foreground: 210 40% 98%;
-
-    --primary: 210 40% 98%;
-    --primary-foreground: 222.2 47.4% 11.2%;
-
-    --secondary: 217.2 32.6% 17.5%;
-    --secondary-foreground: 210 40% 98%;
-
-    --muted: 217.2 32.6% 17.5%;
-    --muted-foreground: 215 20.2% 65.1%;
-
-    --accent: 217.2 32.6% 17.5%;
-    --accent-foreground: 210 40% 98%;
-
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 210 40% 98%;
-
-    --border: 217.2 32.6% 17.5%;
-    --input: 217.2 32.6% 17.5%;
-    --ring: 212.7 26.8% 83.9%;
-    --sidebar-background: 240 5.9% 10%;
-    --sidebar-foreground: 240 4.8% 95.9%;
-    --sidebar-primary: 224.3 76.3% 48%;
-    --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 240 3.7% 15.9%;
-    --sidebar-accent-foreground: 240 4.8% 95.9%;
-    --sidebar-border: 240 3.7% 15.9%;
     --sidebar-ring: 217.2 91.2% 59.8%;
   }
 }
@@ -101,5 +69,153 @@ All colors MUST be HSL.
 
   body {
     @apply bg-background text-foreground;
+    font-family: var(--font-body);
   }
+
+  h1, h2, h3, h4 {
+    font-family: var(--font-display);
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
+@layer components {
+  .hotel-section {
+    @apply py-16 md:py-24 px-4;
+  }
+
+  .hotel-container {
+    @apply max-w-6xl mx-auto;
+  }
+
+  .hotel-heading {
+    font-family: var(--font-display);
+    @apply text-3xl md:text-4xl font-semibold text-foreground mb-3;
+  }
+
+  .hotel-subheading {
+    font-family: var(--font-accent);
+    @apply text-lg text-muted-foreground mb-10;
+  }
+
+  .hotel-card {
+    @apply bg-card rounded-2xl border border-border;
+    box-shadow: var(--shadow-card);
+  }
+
+  .hotel-btn-primary {
+    @apply inline-flex items-center justify-center px-8 py-3 rounded-xl font-medium transition-all duration-300;
+    background: hsl(var(--primary));
+    color: hsl(var(--primary-foreground));
+    font-family: var(--font-body);
+    letter-spacing: 0.02em;
+  }
+
+  .hotel-btn-primary:hover {
+    box-shadow: var(--shadow-elevated);
+    transform: translateY(-2px);
+    background: hsl(var(--hotel-warm));
+  }
+
+  .hotel-btn-outline {
+    @apply inline-flex items-center justify-center px-8 py-3 rounded-xl font-medium transition-all duration-300 border-2;
+    border-color: hsl(var(--primary));
+    color: hsl(var(--primary));
+    font-family: var(--font-body);
+  }
+
+  .hotel-btn-outline:hover {
+    background: hsl(var(--primary));
+    color: hsl(var(--primary-foreground));
+  }
+
+  .hotel-btn-gold {
+    @apply inline-flex items-center justify-center px-8 py-3 rounded-xl font-medium transition-all duration-300;
+    background: hsl(var(--hotel-gold));
+    color: hsl(var(--hotel-dark));
+    font-family: var(--font-body);
+    letter-spacing: 0.02em;
+  }
+
+  .hotel-btn-gold:hover {
+    box-shadow: var(--shadow-elevated);
+    transform: translateY(-2px);
+    filter: brightness(1.08);
+  }
+
+  .hotel-input {
+    @apply w-full px-4 py-3 rounded-xl border border-border bg-card text-foreground transition-all duration-200;
+    font-family: var(--font-body);
+  }
+
+  .hotel-input:focus {
+    @apply outline-none ring-2;
+    ring-color: hsl(var(--hotel-gold) / 0.4);
+    border-color: hsl(var(--hotel-gold));
+  }
+
+  .hotel-label {
+    @apply block text-sm font-medium mb-1.5;
+    color: hsl(var(--hotel-warm));
+    font-family: var(--font-body);
+  }
+
+  .star-btn {
+    @apply text-2xl cursor-pointer transition-all duration-150;
+    color: hsl(var(--border));
+  }
+
+  .star-btn.active {
+    color: hsl(var(--hotel-gold));
+  }
+
+  .star-btn:hover {
+    transform: scale(1.2);
+  }
+}
+
+@layer utilities {
+  .fade-in-up {
+    animation: fadeInUp 0.7s ease-out both;
+  }
+
+  .fade-in-up-delay-1 {
+    animation: fadeInUp 0.7s 0.15s ease-out both;
+  }
+
+  .fade-in-up-delay-2 {
+    animation: fadeInUp 0.7s 0.3s ease-out both;
+  }
+
+  .fade-in-up-delay-3 {
+    animation: fadeInUp 0.7s 0.45s ease-out both;
+  }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.review-card-enter {
+  animation: slideIn 0.5s ease-out both;
 }
